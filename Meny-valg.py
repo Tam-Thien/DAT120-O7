@@ -1,5 +1,3 @@
-#Liten notat om at jeg T.T har laget denne delen av koden kl 3 midt på natta på en søndags-morning...
-#Dette er bare meny utskriften, den funksjonelle delen kommer senere nedover koden.  
 #husk å legge til exceptions for value error og type error.
 
 def meny_liste():
@@ -20,41 +18,7 @@ def meny_liste():
     print("14. Frivillig: Fjern annet valgemne.")
 #meny_liste()
 
-def meny_valg(): 
-         
-    valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
 
-    if valg == 1:
-        valg1()
-    elif valg == 2: 
-        valg2()
-    elif valg == 3:
-        valg3()
-    elif valg == 4:
-        valg4()
-    elif valg == 5:
-        valg5()
-    elif valg == 6:
-        valg6()
-    elif valg == 7:
-        valg7()
-    elif valg == 8:
-        valg8()
-    elif valg == 9:
-        valg9()
-    elif valg == 10:
-        valg10()
-    elif valg == 11:
-        valg11()
-    elif valg == 12:
-        valg12()
-    elif valg == 13:
-        valg13()
-    elif valg == 14: 
-        #valg14()
-        print("test14, i def_meny_valg for debug") #for debug, husk å rette opp koden før levering.
-    else:
-        print("Feil, velg et tall mellom 1 og 14.")
 
 emne_liste = []    
 
@@ -67,7 +31,8 @@ def valg1(): #1) Lag et nytt emne.
     emnekode = input("Skriv inn emnekode: ")
     navn = input("Skriv inn navn på emnet: ")
     sesong_input = int(input("Skriv inn 1 for høst og 2 for vår: "))
-    studiepoeng = input("Skriv inn studie poeng: ")
+    studiepoeng = int(input("Skriv inn studie poeng: "))
+
 
     if sesong_input == 1: 
         sesong = "høst"
@@ -85,12 +50,10 @@ def valg1(): #1) Lag et nytt emne.
     print(emne_liste) #for debug, for å se at den går gjennom.
 
     #print("\ntest print for valg 1") # placeholder debug for precode.
-    
-valg1()
+#valg1()
    
-
-
-
+def valg3():
+    print(emne_liste)
 
 
 
@@ -125,10 +88,48 @@ valg1()
 
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
-#meny_liste() #skriver ut meny valgene
-#meny_valg()   #funksjon for hva som skjer når velger tallet. 
-              #Når du f.eks velger 1 går du inn i valg1() funksjonen som er å lage et nytt emne.
-    
+def hoved_program():
+    while True:
+        meny_liste() #skriver ut meny valgene         
+        
+        valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
+
+        if valg == 1:
+            valg1()
+        elif valg == 2: 
+            valg2()
+        elif valg == 3:
+            valg3()
+        elif valg == 4:
+            valg4()
+        elif valg == 5:
+            valg5()
+        elif valg == 6:
+            valg6()
+        elif valg == 7:
+            valg7()
+        elif valg == 8:
+            print("Avslutter programmet")
+            break
+        elif valg == 9:
+            valg9()
+        elif valg == 10:
+            valg10()
+        elif valg == 11:
+            valg11()
+        elif valg == 12:
+            valg12()
+        elif valg == 13:
+            valg13()
+        elif valg == 14: 
+            #valg14()
+            print("test14, i def_meny_valg for debug") #for debug, husk å rette opp koden før levering.
+        else:
+            print("Feil, velg et tall mellom 1 og 14.")
+           
+                      
+#Kjører hoved programmet for menyen
+hoved_program()
 
 
 
