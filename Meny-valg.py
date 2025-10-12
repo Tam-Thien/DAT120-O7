@@ -54,10 +54,10 @@ def meny_valg():
         #valg14()
         print("test14, i def_meny_valg for debug") #for debug, husk å rette opp koden før levering.
     else:
-        print("Error, please choose values from 1-14.")
+        print("Feil, velg et tall mellom 1 og 14.")
 
 
-def valg1():
+def valg1(): #1) Lag et nytt emne.
     print("\ntest print for valg 1")
 
     
