@@ -1,5 +1,8 @@
 #husk å legge til exceptions for value error og type error.
 
+emne_liste = []
+
+#Printer ut menyen. Har ingen funksjon i seg selv, men trengs for å lese før folk kan velge.
 def meny_liste():
     print("\n________Meny:_______")   
     print("01. Lag et nytt emne.")
@@ -18,82 +21,49 @@ def meny_liste():
     print("14. Frivillig: Fjern annet valgemne.")
 #meny_liste()
 
-
-
-emne_liste = []    
-
-'''prøver på denne fremgangsmåten: Vi kan ha en liste for emner, men i listen kan hvert emne være en dictionary.
-På den måten kan vi endre og legge til enklere uten å referere til index, siden sletting kan endre index 
-rekkefølgen. Ulempen er at det tar lengre til å kode, og at bruker må lete i en oppslags katalog for å finne
-ut hva koden til emnet er. Men jeg tror dette er den bedre metoden, mer fleksibelt.'''
-
-def valg1(): #1) Lag et nytt emne.
+#endre på kode for å legge til på ny måte:
+def valg1(): #1) Lag et nytt emne. #ønsket struktur "DAT120": {"navn": data, "sesong": "høst", "studiepoeng": 10}
+    
     emnekode = input("Skriv inn emnekode: ")
     navn = input("Skriv inn navn på emnet: ")
-    sesong_input = int(input("Skriv inn 1 for høst og 2 for vår: "))
-    studiepoeng = int(input("Skriv inn studie poeng: "))
-
-
+    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: "))
     if sesong_input == 1: 
         sesong = "høst"
     elif sesong_input == 2:
         sesong = "vår"
     else:
-        print("vennligst velg 1 eller 2") # Lag en try except blokk senere..............
+        print("vennligst velg 1 (for høst) eller 2 (for vår)") # Lag en try except blokk senere..............    
+    studiepoeng = int(input("Skriv inn studie poeng: "))
 
-    emne_liste.append({
-        "emnekode": emnekode,
-        "navn": navn,
-        "sesong": sesong,
-        "studiepoeng": studiepoeng
-        })
-    print(emne_liste) #for debug, for å se at den går gjennom.
-
-    #print("\ntest print for valg 1") # placeholder debug for precode.
-#valg1()
-   
-def valg3():
-    print(emne_liste)
+    emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng} 
+    emne_liste.append(emne)
+    print(f"Emne kode {emnekode} er lagt til.")
 
 
-
-
-
+def valg3(): #Skriv ut liste over emner
+    print("Emne liste:")
+    for emne in emne_liste:
+        print(f"Emnekode: {emne["emnekode"]}, Navn: {emne["navn"]}, Sesong: {emne["sesong"]}, Studiepoeng: {emne["studiepoeng"]}")
+        # Vi vet at emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng}
+        # f formaterer så vi kan bruke variabler.
+        # {emne} henter variabler mens {emne['navn']} henter navn i emne.
+        # emne er en "ordbok" --> a dictionary. Basically liste.
+        # Begrunnelse for valg av dictionary istedenfor liste er fra anbefaling fra oppgaven. Det gjør det enklere å organisere,
+        #f.eks når man skal slette. Ulempen er at det kan ta lengre tid å kode, og man må slå opp "katalog" for å finne kode på emnet.
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
 def hoved_program():
+    
     while True:
-        meny_liste() #skriver ut meny valgene         
+        meny_liste() #skriver ut meny valgene 
         
         valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
-
+        
         if valg == 1:
             valg1()
         elif valg == 2: 
@@ -130,9 +100,3 @@ def hoved_program():
                       
 #Kjører hoved programmet for menyen
 hoved_program()
-
-
-
-
-
-
