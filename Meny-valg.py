@@ -1,8 +1,37 @@
+#
+#
+# ----------------------------------------------------- HEI --------------------------------------------------------
+#                                        
+#                                            TLDR: Gjør oppgave 2, 4, 5, 6, 7.
+#                                       
+#                                        Kommentar til gruppen vår:
+#
+# Jeg har gjort oppgave A) (Github repo:), delvis B (la meg legge dere til også kan vi lage en branch til hver av dere.)
+# har ikke gjort c, men har gjort D.
+# "Lag programmet: Programmet skal starte med å skrive ut menyen oppgitt i delkapitlet «menyvalg»."
+#
+# Av meny-valgene har jeg lagd selve menyen, (må endres litt etterpå når alt samles, legge på exception eller if else osv...)
+# Menyvalg 1 (Lag et nytt emne) er ferdig og funksjonell.
+# Menyvalg 3 (Skriv ut ei liste over alle registrerte emner) er lagd og fungerer bra.
+# Menyvalg 8 (Avslutt) er ferdig.
+#
+#
+#
+
+
+
+
+
+
+
+
+
+
+
 #husk å legge til exceptions for value error og type error.
+emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
 
-emne_liste = []
-
-#Printer ut menyen. Har ingen funksjon i seg selv, men trengs for å lese før folk kan velge.
+#Printer ut menyen. 
 def meny_liste():
     print("\n________Meny:_______")   
     print("01. Lag et nytt emne.")
@@ -21,13 +50,13 @@ def meny_liste():
     print("14. Frivillig: Fjern annet valgemne.")
 #meny_liste()
 
-#endre på kode for å legge til på ny måte:
-def valg1(): #1) Lag et nytt emne. #ønsket struktur "DAT120": {"navn": data, "sesong": "høst", "studiepoeng": 10}
+#endret på kode for å legge til på ny måte:
+def valg1(): #1) Lag et nytt emne.
     
     emnekode = input("Skriv inn emnekode: ")
     navn = input("Skriv inn navn på emnet: ")
-    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: "))
-    if sesong_input == 1: 
+    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: ")) #vi har 1 og 2 så vi slipper å tenke på lower case, space osv når folk skriver inn høst og vår. Kan eventuelt bruke h/v.
+    if sesong_input == 1: #grunnen til at det står sesong og ikke semester som i høst/vår semester er for å unngå overlapp i navn og forvirring siden i oppgave 2 trenger man å bruke "semester" i koden.
         sesong = "høst"
     elif sesong_input == 2:
         sesong = "vår"
