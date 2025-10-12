@@ -56,11 +56,38 @@ def meny_valg():
     else:
         print("Feil, velg et tall mellom 1 og 14.")
 
+emne_liste = []    
+
+'''prøver på denne fremgangsmåten: Vi kan ha en liste for emner, men i listen kan hvert emne være en dictionary.
+På den måten kan vi endre og legge til enklere uten å referere til index, siden sletting kan endre index 
+rekkefølgen. Ulempen er at det tar lengre til å kode, og at bruker må lete i en oppslags katalog for å finne
+ut hva koden til emnet er. Men jeg tror dette er den bedre metoden, mer fleksibelt.'''
 
 def valg1(): #1) Lag et nytt emne.
-    print("\ntest print for valg 1")
+    emnekode = input("Skriv inn emnekode: ")
+    navn = input("Skriv inn navn på emnet: ")
+    sesong_input = int(input("Skriv inn 1 for høst og 2 for vår: "))
+    studiepoeng = input("Skriv inn studie poeng: ")
 
+    if sesong_input == 1: 
+        sesong = "høst"
+    elif sesong_input == 2:
+        sesong = "vår"
+    else:
+        print("vennligst velg 1 eller 2") # Lag en try except blokk senere..............
+
+    emne_liste.append({
+        "emnekode": emnekode,
+        "navn": navn,
+        "sesong": sesong,
+        "studiepoeng": studiepoeng
+        })
+    print(emne_liste) #for debug, for å se at den går gjennom.
+
+    #print("\ntest print for valg 1") # placeholder debug for precode.
     
+valg1()
+   
 
 
 
@@ -98,8 +125,8 @@ def valg1(): #1) Lag et nytt emne.
 
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
-meny_liste() #skriver ut meny valgene
-meny_valg()   #funksjon for hva som skjer når velger tallet. 
+#meny_liste() #skriver ut meny valgene
+#meny_valg()   #funksjon for hva som skjer når velger tallet. 
               #Når du f.eks velger 1 går du inn i valg1() funksjonen som er å lage et nytt emne.
     
 
