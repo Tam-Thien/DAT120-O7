@@ -6,7 +6,7 @@ def meny_liste():
     print("\n________Meny:_______")   
     print("01. Lag et nytt emne.")
     print("02. Legg til et emne i studieplanen.")
-    print("03. Skriv ut ei liste over alle registrerte emner.")
+    print("03. Skriv ut en liste over alle registrerte emner.")
     print("04. Skriv ut studieplanen med hvilke emner som er i hvert semester.")
     print("05. Sjekk om studieplanen er gyldig eller ikke.")
     print("06. Lagre emnene og studieplanen til fil")
@@ -57,10 +57,6 @@ def meny_valg():
             print("Error...")
     except ValueError:
         print("ValueError :D")
-
-#meny_valg(input("Velg tall fra meny: "))
-  
-
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
 meny_liste()
