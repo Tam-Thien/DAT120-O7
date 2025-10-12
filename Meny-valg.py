@@ -54,7 +54,7 @@ def valg3(): #Skriv ut liste over emner
 
 
 
-
+ 
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
 def hoved_program():
