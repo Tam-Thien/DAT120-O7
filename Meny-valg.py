@@ -59,7 +59,7 @@ def meny_valg():
         print("ValueError :D")
 
 #meny_valg(input("Velg tall fra meny: "))
-#sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...    
+  
 
 
 #EDIT main loop her etterpå, dette er hvertfall starten.
