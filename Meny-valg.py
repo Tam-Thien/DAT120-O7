@@ -20,9 +20,9 @@ def meny_liste():
     print("14. Frivillig: Fjern annet valgemne.")
 #meny_liste()
 
-def meny_valg():
+def meny_valg(): 
     try: 
-        valg = int(input("\nVelg tall fra meny: "))
+        valg = int(input("\nVelg tall fra meny: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
 
         if valg == 1:
             valg1()
