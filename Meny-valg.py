@@ -1,36 +1,6 @@
-#
-#
-# ----------------------------------------------------- HEI --------------------------------------------------------
-#                                        
-#                                            TLDR: Gjør oppgave 2, 4, 5, 6, 7.
-#                                       
-#                                        Kommentar til gruppen vår:
-#
-# Jeg har gjort oppgave A) (Github repo:), delvis B (la meg legge dere til også kan vi lage en branch til hver av dere.)
-# har ikke gjort c, men har gjort D.
-# "Lag programmet: Programmet skal starte med å skrive ut menyen oppgitt i delkapitlet «menyvalg»."
-#
-# Av meny-valgene har jeg lagd selve menyen, (må endres litt etterpå når alt samles, legge på exception eller if else osv...)
-# Menyvalg 1 (Lag et nytt emne) er ferdig og funksjonell.
-# Menyvalg 3 (Skriv ut ei liste over alle registrerte emner) er lagd og fungerer bra.
-# Menyvalg 8 (Avslutt) er ferdig.
-#
-#
-#
-
-
-
-
-
-
-
-
-
-
-
 #husk å legge til exceptions for value error og type error.
 emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
-
+#andreas
 #Printer ut menyen. 
 def meny_liste():
     print("\n________Meny:_______")   
