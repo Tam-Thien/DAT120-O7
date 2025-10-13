@@ -1,6 +1,7 @@
 #husk å legge til exceptions for value error og type error.
+
 emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
-#andreas
+
 #Printer ut menyen. 
 def meny_liste():
     print("\n________Meny:_______")   
@@ -18,9 +19,9 @@ def meny_liste():
     print("12. Frivillig: Fjern anbefalt valgemne.")
     print("13. Frivillig: Legg til annet valgemne.")
     print("14. Frivillig: Fjern annet valgemne.")
-#meny_liste()
 
-#endret på kode for å legge til på ny måte:
+
+# valg1() v1.3. 
 def valg1(): #1) Lag et nytt emne.
     
     emnekode = input("Skriv inn emnekode: ")
@@ -37,6 +38,9 @@ def valg1(): #1) Lag et nytt emne.
     emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng} 
     emne_liste.append(emne)
     print(f"Emne kode {emnekode} er lagt til.")
+
+#-------------------------- OK, tror jeg forstår feilen nå. når vi endrer på valg()1 så gjør endringen error i valg3() pga.  f formatering av emnekode.
+#skal prøve å fikse det.
 
 
 def valg3(): #Skriv ut liste over emner
