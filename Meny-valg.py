@@ -1,101 +1,154 @@
-#husk å legge til exceptions for value error og type error.
-emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
-#andreas
-#Printer ut menyen. 
-def meny_liste():
-    print("\n________Meny:_______")   
-    print("01. Lag et nytt emne.")
-    print("02. Legg til et emne i studieplanen.")
-    print("03. Skriv ut en liste over alle registrerte emner.")
-    print("04. Skriv ut studieplanen med hvilke emner som er i hvert semester.")
-    print("05. Sjekk om studieplanen er gyldig eller ikke.")
-    print("06. Lagre emnene og studieplanen til fil")
-    print("07. Les inn emnene og studieplanen fra fil.")
-    print("08. Avslutt.")
-    print("09. Frivillig: Slett et emne.")
-    print("10. Frivillig: Fjern et emne fra studieprogrammet uten å slette det fra emnelista.")
-    print("11. Frivillig: Legg til anbefalt valgemne.")
-    print("12. Frivillig: Fjern anbefalt valgemne.")
-    print("13. Frivillig: Legg til annet valgemne.")
-    print("14. Frivillig: Fjern annet valgemne.")
-#meny_liste()
+import csv
 
-#endret på kode for å legge til på ny måte:
-def valg1(): #1) Lag et nytt emne.
-    
-    emnekode = input("Skriv inn emnekode: ")
-    navn = input("Skriv inn navn på emnet: ")
-    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: ")) #vi har 1 og 2 så vi slipper å tenke på lower case, space osv når folk skriver inn høst og vår. Kan eventuelt bruke h/v.
-    if sesong_input == 1: #grunnen til at det står sesong og ikke semester som i høst/vår semester er for å unngå overlapp i navn og forvirring siden i oppgave 2 trenger man å bruke "semester" i koden.
-        sesong = "høst"
-    elif sesong_input == 2:
-        sesong = "vår"
-    else:
-        print("vennligst velg 1 (for høst) eller 2 (for vår)") # Lag en try except blokk senere..............    
-    studiepoeng = int(input("Skriv inn studie poeng: "))
+# Globale lister
+emne_liste = []
+studieplan = {}
 
-    emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng} 
-    emne_liste.append(emne)
-    print(f"Emne kode {emnekode} er lagt til.")
-
-
-def valg3(): #Skriv ut liste over emner
-    print("Emne liste:")
-    for emne in emne_liste:
-        print(f"Emnekode: {emne["emnekode"]}, Navn: {emne["navn"]}, Sesong: {emne["sesong"]}, Studiepoeng: {emne["studiepoeng"]}")
-        # Vi vet at emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng}
-        # f formaterer så vi kan bruke variabler.
-        # {emne} henter variabler mens {emne['navn']} henter navn i emne.
-        # emne er en "ordbok" --> a dictionary. Basically liste.
-        # Begrunnelse for valg av dictionary istedenfor liste er fra anbefaling fra oppgaven. Det gjør det enklere å organisere,
-        #f.eks når man skal slette. Ulempen er at det kan ta lengre tid å kode, og man må slå opp "katalog" for å finne kode på emnet.
+# ------------------ Meny ------------------
+def vis_meny():
+    print("\n________Meny:_______")
+    print("1. Lag et nytt emne.")
+    print("2. (kommer senere) Legg til emne i studieplan.")
+    print("3. Skriv ut alle registrerte emner.")
+    print("4. (kommer senere) Skriv ut studieplan.")
+    print("5. (kommer senere) Sjekk om studieplanen er gyldig.")
+    print("6. Lagre emner og studieplan til CSV-fil.")
+    print("7. Les inn emner og studieplan fra CSV-fil.")
+    print("8. Avslutt.")
 
 
 
+def lag_nytt_emne():
+    """Oppretter og legger til et nytt emne i listen."""
+    try:
+        emnekode = input("Skriv inn emnekode: ").strip().upper()
+        navn = input("Skriv inn navn på emnet: ").strip()
 
- 
-
-#EDIT main loop her etterpå, dette er hvertfall starten.
-def hoved_program():
-    
-    while True:
-        meny_liste() #skriver ut meny valgene 
-        
-        valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
-        
-        if valg == 1:
-            valg1()
-        elif valg == 2: 
-            valg2()
-        elif valg == 3:
-            valg3()
-        elif valg == 4:
-            valg4()
-        elif valg == 5:
-            valg5()
-        elif valg == 6:
-            valg6()
-        elif valg == 7:
-            valg7()
-        elif valg == 8:
-            print("Avslutter programmet")
-            break
-        elif valg == 9:
-            valg9()
-        elif valg == 10:
-            valg10()
-        elif valg == 11:
-            valg11()
-        elif valg == 12:
-            valg12()
-        elif valg == 13:
-            valg13()
-        elif valg == 14: 
-            #valg14()
-            print("test14, i def_meny_valg for debug") #for debug, husk å rette opp koden før levering.
+        sesong_input = int(input("Skriv 1 for høst eller 2 for vår: "))
+        if sesong_input == 1:
+            sesong = "høst"
+        elif sesong_input == 2:
+            sesong = "vår"
         else:
-            print("Feil, velg et tall mellom 1 og 14.")
-           
-                      
-#Kjører hoved programmet for menyen
-hoved_program()
+            print(" Ugyldig valg — velg 1 (høst) eller 2 (vår).")
+            return
+
+        studiepoeng = float(input("Skriv inn antall studiepoeng: "))
+
+        emne = {
+            "emnekode": emnekode,
+            "navn": navn,
+            "sesong": sesong,
+            "studiepoeng": studiepoeng
+        }
+        emne_liste.append(emne)
+        print(f" Emnet '{navn}' ({emnekode}) ble lagt til.")
+    except ValueError:
+        print(" Ugyldig input — prøv igjen med riktige verdier.")
+
+def skriv_ut_emner():
+    """Skriver ut alle registrerte emner."""
+    if not emne_liste:
+        print("Ingen emner er registrert ennå.")
+        return
+
+    print("\n Emneliste:")
+    for emne in emne_liste:
+        print(f"Emnekode: {emne['emnekode']}, "
+              f"Navn: {emne['navn']}, "
+              f"Sesong: {emne['sesong']}, "
+              f"Studiepoeng: {emne['studiepoeng']}")
+
+
+def lagre_til_fil():
+    """Lagrer emner og studieplan til CSV-filer."""
+    try:
+        emne_filnavn = input("Filnavn for emner (uten .csv): ").strip() or "emner"
+        plan_filnavn = input("Filnavn for studieplan (uten .csv): ").strip() or "studieplan"
+
+        # Lagre emner
+        with open(emne_filnavn + ".csv", "w", newline="", encoding="utf-8") as fil:
+            felt_navn = ["emnekode", "navn", "sesong", "studiepoeng"]
+            writer = csv.DictWriter(fil, fieldnames=felt_navn)
+            writer.writeheader()
+            writer.writerows(emne_liste)
+        print(f" Emneliste lagret til '{emne_filnavn}.csv'.")
+
+        # Lagre studieplan (hvis den finnes)
+        if studieplan:
+            with open(plan_filnavn + ".csv", "w", newline="", encoding="utf-8") as fil:
+                writer = csv.writer(fil)
+                writer.writerow(["semester", "emner"])
+                for semester, emner in studieplan.items():
+                    writer.writerow([semester, ";".join(emner)])
+            print(f" Studieplan lagret til '{plan_filnavn}.csv'.")
+        else:
+            print("ℹ Ingen studieplan å lagre ennå.")
+    except Exception as e:
+        print(f" Feil ved lagring: {e}")
+
+
+def les_fra_fil():
+    """Leser inn emner og studieplan fra CSV-filer."""
+    global emne_liste, studieplan
+    try:
+        emne_filnavn = input("Filnavn for emner (uten .csv): ").strip() or "emner"
+        plan_filnavn = input("Filnavn for studieplan (uten .csv): ").strip() or "studieplan"
+
+        emne_liste = []
+        studieplan = {}
+
+        # Les emner
+        with open(emne_filnavn + ".csv", "r", encoding="utf-8") as fil:
+            reader = csv.DictReader(fil)
+            for rad in reader:
+                rad["studiepoeng"] = float(rad["studiepoeng"])
+                emne_liste.append(rad)
+        print(f" Leste inn {len(emne_liste)} emner fra '{emne_filnavn}.csv'.")
+
+        # Les studieplan
+        try:
+            with open(plan_filnavn + ".csv", "r", encoding="utf-8") as fil:
+                reader = csv.reader(fil)
+                next(reader)
+                for semester, emner_str in reader:
+                    emner = emner_str.split(";") if emner_str else []
+                    studieplan[semester] = emner
+            print(f" Studieplan lest inn fra '{plan_filnavn}.csv'.")
+        except FileNotFoundError:
+            print("ℹ Fant ikke studieplanfilen. Hopper over denne delen.")
+
+    except FileNotFoundError:
+        print(" Fant ikke filen. Sjekk filnavn og prøv igjen.")
+    except Exception as e:
+        print(f" En uventet feil oppstod: {e}")
+
+
+# ------------------ Hovedprogram ------------------
+def hovedprogram():
+    while True:
+        vis_meny()
+        try:
+            valg = int(input("\nVelg et tall fra menyen: "))
+        except ValueError:
+            print(" Du må skrive et tall.")
+            continue
+
+        if valg == 1:
+            lag_nytt_emne()
+        elif valg == 2:
+            print("Funksjon for studieplan kommer senere.")
+        elif valg == 3:
+            skriv_ut_emner()
+        elif valg == 6:
+            lagre_til_fil()
+        elif valg == 7:
+            les_fra_fil()
+        elif valg == 8:
+            print("Avslutter programmet. ")
+            break
+        else:
+            print("Ugyldig valg — prøv igjen.")
+
+# Start programmet
+hovedprogram()
