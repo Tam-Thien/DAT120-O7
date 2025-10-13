@@ -129,3 +129,6 @@ def hoved_program():
                       
 #Kjører hoved programmet for menyen
 hoved_program()
+
+
+#Marty
