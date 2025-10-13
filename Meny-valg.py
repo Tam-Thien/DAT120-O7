@@ -1,6 +1,5 @@
 #husk å legge til exceptions for value error og type error.
-emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
-#andreas
+emne_liste = {} #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
 #Printer ut menyen. 
 def meny_liste():
     print("\n________Meny:_______")   
@@ -38,7 +37,34 @@ def valg1(): #1) Lag et nytt emne.
     emne_liste.append(emne)
     print(f"Emne kode {emnekode} er lagt til.")
 
+    
+    emne = input("emnekode:")
+    emne_liste[emne] = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng}}
 
+"""
+def valg2(): #2) Legge til emne i studieplan    
+    studieplan = []
+    for s in range(1,7):
+        semester = []
+        while True:
+            valg = int(input(f"Skriv 1 for å legge til emner i semester {s}, skriv 2 for å gå videre."))
+            if valg == 1:
+                emne = input("legg til et emne i første semester:")
+                semester.append(emne)
+            elif valg == 2:
+                break
+            else:
+                raise ValueError("Skriv 1 eller 2")
+        
+            studieplan.append(semester)
+
+emne_liste
+def valg1(emne_liste):
+    emne_liste
+    while True:
+        emne = input("fagkode:")
+        emne_liste[emne] = 
+"""
 def valg3(): #Skriv ut liste over emner
     print("Emne liste:")
     for emne in emne_liste:
@@ -99,3 +125,61 @@ def hoved_program():
                       
 #Kjører hoved programmet for menyen
 hoved_program()
+
+
+'''
+-----------------------------------------------------------------------------------------------------------------------
+
+studieplan = {"sem1":[],
+                  "sem2":[],
+                  "sem3":[],
+                  "sem4":[],
+                  "sem5":[],
+                  "sem6":[]}
+sem1 = []
+emne_liste = {}
+def meny_liste():
+    print("\n________Meny:_______")   
+    print("01. Lag et nytt emne.")
+    print("02. Legg til et emne i studieplanen.")
+    print("03. Skriv ut en liste over alle registrerte emner.")
+
+
+
+                      
+#Kjører hoved programmet for menyen
+
+
+def valg1(): #1) Lag et nytt emne.
+    
+    emnekode = input("Skriv inn emnekode: ")
+    navn = input("Skriv inn navn på emnet: ")
+    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: ")) #vi har 1 og 2 så vi slipper å tenke på lower case, space osv når folk skriver inn høst og vår. Kan eventuelt bruke h/v.
+    if sesong_input == 1: #grunnen til at det står sesong og ikke semester som i høst/vår semester er for å unngå overlapp i navn og forvirring siden i oppgave 2 trenger man å bruke "semester" i koden.
+        sesong = "høst"
+    elif sesong_input == 2:
+        sesong = "vår"
+    else:
+        print("vennligst velg 1 (for høst) eller 2 (for vår)") # Lag en try except blokk senere..............    
+    studiepoeng = int(input("Skriv inn studie poeng: "))
+     
+    emne_liste[emnekode] = {"navn": navn, "sesong": sesong, "studiepoeng": studiepoeng} 
+    
+    sem1.append(emnekode)
+def valg3(): #Skriv ut liste over emner 
+        print(sem1)
+def hoved_program():
+    
+    while True:
+        meny_liste() #skriver ut meny valgene 
+        
+        valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
+        
+        if valg == 1:
+            valg1()
+        elif valg == 3:
+            valg3()
+          
+    
+hoved_program()
+'''
