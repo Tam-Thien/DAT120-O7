@@ -1,5 +1,19 @@
 
 emner = {} # Istedenfor eempty list bruker vi empty dictionary. 
+#kan skrive studieplan = {semester: [] for semester in range(1, 7)} men ønsker å ha listene klart. Egen prefferanse, men koden med "for-løkke" er bedre
+'''studieplan = {
+    "sem1": [],
+    "sem2": [],
+    "sem3": [],
+    "sem4": [],
+    "sem5": [],
+    "sem6": [],
+}    
+'''
+#Jeg bare koder denne delen enklere ved å bare bruke tall, så slipper vi f streng formateringen og hele pakken.
+#Ok, viser seg at jeg måtte bruke f streng formatering like vell, men det ble mer oversiktlig i valg2(). 
+#Printer ut semester listene inne i studieplan.
+studieplan = {semester: [] for semester in range(1, 7)}
 
 #Printer ut menyen. #Midlertidig kommentert ut meny 9-14 for oversiktlighet. 
 def meny_liste():
@@ -40,11 +54,82 @@ def valg1():
 #skal prøve å fikse det.
 #Fiksa :D
 
+#v1.5
+def valg2(): #Legg til et emne i studieplanen #Husk å legge til try except senere etter v1.4. 
+    #print("\nVelg emne:") # husk å legge til kode for å sjekke... basically bare aktiver valg3() funksjon og print ut emner. Og i neste kode, bruk valget til å sette inn i lista.
+    valg3() # funksjonen skriver ut emne lister som er tilgjengelige.
+    emnekode = input("Skriv inn emnekoden du vil legge til i studieplanet.") # kan prøve å filtrere / gjøre ryddigere ved f.eks .strip(), .lower()  eller lignende. Skal bare kode den funksjonelle delen før jeg setter meg for mye inn i feilhåndtering og exept blokk osv...
+    
+
+    if emnekode not in emner:
+        print("Feil. Emne finnes ikke.")
+        return
+    
+
+    print("Velg semesteret du ønsker å legge emnet i.")
+    for i in range(1, 7):
+        #print(f"{i}: sem{i}") #Egentlig kan vi simplifisere det ved å bare bruke 1-6 isteden for sem 1-6...
+        print(f"Semester {i}")             
+
+    semester = int(input("Skriv et tall fra 1 til 6: "))# legg til try except senere, dette var v1.5
+    # husk value error, elif, else osv.....
+    studieplan[semester].append(emnekode)
+    print(f"Emnekode: {emnekode} ble lagt til i Semester {semester}")
+
+
+    #semester = int(input("Hvilket semester skal"))
+    #studieplan[semester]
+
+
+
+
+
 def valg3(): #Skriv ut liste over emner
     print("\nEmner:") # Denne ligger før "for løkken" siden vi bare ønsker å printe ut overskriften en gang.
     for kode, data in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
         print(f"Emnekode: {kode}, Navn: {data['navn']}, Sesong: {data['sesong']}, Studiepoeng: {data['studiepoeng']} ") 
         #kode er emnekode, data er verdier i emner. #tilsvarende kode på generisk form blir vell nøkkel og verdi som dictionaries har. 
+
+'''
+def valg4(): #Vis studieplan #husk å teste denne, blir ikke ferdig idag, det er sent på natta... v1.5.1
+    print("\nStudieplan:")
+    for semester, emnekoder in studieplan.items(): #alternativt, se *** nede:
+        print(f"Semester {semester}") #
+
+    for kode in emnekoder:
+        emne = emner.get(kode) 
+        if emne:
+            print(f"Emnekode: {kode}, Navn: {emne['navn']}, Sesong: {emne['sesong']}, Studiepoeng: {emne['studiepoeng']}")   
+        '''
+        
+#  *** alternativt kan vi skrive slikt hvis vi ikke ønsker .items()   : 
+'''
+def valg4():  # Vis hele studieplanen
+    print("\nStudieplan:")
+    for semester in studieplan:  # iterates over keys
+        emnekoder = studieplan[semester]  # gets value from key
+        print(f"\n{semester}:")
+        for emnekode in emnekoder:
+            print(f"{emnekode}")
+'''
+#Skal kommentere mer på denne etterpå...
+def valg4():  # Vis hele studieplanen v1.7
+    print("\nStudieplan:")
+    for semester, emnekoder in studieplan.items():
+        print(f"\nSemester {semester}:")
+        if not emnekoder:
+            print("  (Ingen emner)")  # If the semester list is empty
+        else:
+            for kode in emnekoder:
+                emne = emner.get(kode)
+                if emne:
+                    print(f"  {kode}: {emne['navn']} ({emne['sesong']}, {emne['studiepoeng']} studiepoeng)")
+                else:
+                    print(f"  {kode}: (Ukjent emne)")
+   #--------------------------------------------------------------------------------------------------------------
+#koden fungerer endelig, men må sette inn sperre for duplikat. Må også sette inn try except, elif, else, osv... 
+ #--------------------------------------------------------------------------------------------------------------------
+
 
 
 
