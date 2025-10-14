@@ -41,9 +41,11 @@ def valg1():
         sesong = "Vår"
     else:
         print("vennligst velg 1 (for høst) eller 2 (for vår)") # Lag en try except blokk senere..............    
-    
-    studiepoeng = int(input("Skriv inn studie poeng: "))
-
+    try:
+        studiepoeng = int(input("Skriv inn studie poeng: "))
+    except ValueError:
+        print("Skriv et tall")
+        return
     emner[emnekode] = {
         "navn": navn,
         "sesong": sesong,
@@ -53,37 +55,63 @@ def valg1():
 #--- OK, tror jeg forstår feilen nå. når vi endrer på valg()1 så gjør endringen error i valg3() pga.  f formatering av emnekode.
 #skal prøve å fikse det.
 #Fiksa :D
-
-
-
-#v1.5
 def valg2():  # Legg til et emne i studieplanen
-    valg3()  # Funksjonen skriver ut emnelistene som er tilgjengelige
+    valg3()  # Skriver ut tilgjengelige emner
 
     emnekode = input("Skriv inn emnekoden du vil legge til i studieplanen: ").strip().lower()
 
-    # Sjekk om emnet allerede finnes i studieplanen (alle semestre)
+    # Sjekk om emnet allerede finnes i studieplanen
     for semester_emner in studieplan.values():
         if emnekode in semester_emner:
             print("Emnet er allerede i studieplanen.")
-            return  # Ikke legg til på nytt
+            return  
+
+    emne = emner.get(emnekode)
+    if not emne:
+        print("Emnet finnes ikke :(")
+        return
+
+    sesong = emne['sesong']
 
     print("Velg semesteret du ønsker å legge emnet i.")
+
     while True:
         try:
             semester = int(input("Skriv et tall fra 1 til 6: "))
             if 1 <= semester <= 6:
+
+                if sesong == "Høst" and semester not in [1, 3, 5]:
+                    print("Dette emnet kan bare legges i HØST-semester (1, 3, 5).")
+                    return
+                if sesong == "Vår" and semester not in [2, 4, 6]:
+                    print("Dette emnet kan bare legges i VÅR-semester (2, 4, 6).")
+                    return
+
+                # Sjekk om emnet kan legges til uten å overstige 30 studiepoeng
+                nåværende_poeng = sum(emner.get(k, {}).get("studiepoeng", 0) for k in studieplan[semester])
+                nytt_total = nåværende_poeng + emne["studiepoeng"]
+
+                if nytt_total > 30:
+                    print(f"Kan ikke legge til. Semester {semester} får {nytt_total} studiepoeng (maks er 30).")
+                    return
+
+                # Alt OK, legg til emne
                 studieplan[semester].append(emnekode)
-                print(f"Emnekode {emnekode} ble lagt til i Semester {semester}.")
-                break
+                print(f"{emnekode} ble lagt til i semester {semester}.")
+                return
+
             else:
                 print("Velg et tall mellom 1 og 6.")
         except ValueError:
             print("Skriv inn et gyldig tall.")
 
-                         
+
+
+
+           
+    
                 
-        
+      
                            
     
 
