@@ -79,7 +79,7 @@ def valg3(): #Skriv ut liste over emner
 
 
 #Skal kommentere mer på denne etterpå...
-def valg4():  # Vis hele studieplanen v1.7
+def valg4():  
     print("\nStudieplan:")
     for semester, emnekoder in studieplan.items():
         print(f"\nSemester {semester}:")
