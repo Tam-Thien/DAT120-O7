@@ -92,7 +92,7 @@ def valg2():  # Legg til et emne i studieplanen
                 nytt_total = nåværende_poeng + emne["studiepoeng"]
 
                 if nytt_total > 30:
-                    print(f"Kan ikke legge til. Semester {semester} får {nytt_total} studiepoeng (maks er 30).")
+                    print(f"Kan ikke legge til. Semester {semester} fordi {nytt_total} studiepoeng (maks er 30).")
                     return
 
                 # Alt OK, legg til emne
