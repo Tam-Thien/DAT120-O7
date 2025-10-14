@@ -1,37 +1,21 @@
-#
-#
-# ----------------------------------------------------- HEI --------------------------------------------------------
-#                                        
-#                                            TLDR: Gjør oppgave 2, 4, 5, 6, 7.
-#                                       
-#                                        Kommentar til gruppen vår:
-#
-# Jeg har gjort oppgave A) (Github repo:), delvis B (la meg legge dere til også kan vi lage en branch til hver av dere.)
-# har ikke gjort c, men har gjort D.
-# "Lag programmet: Programmet skal starte med å skrive ut menyen oppgitt i delkapitlet «menyvalg»."
-#
-# Av meny-valgene har jeg lagd selve menyen, (må endres litt etterpå når alt samles, legge på exception eller if else osv...)
-# Menyvalg 1 (Lag et nytt emne) er ferdig og funksjonell.
-# Menyvalg 3 (Skriv ut ei liste over alle registrerte emner) er lagd og fungerer bra.
-# Menyvalg 8 (Avslutt) er ferdig.
-#
-#
-#
 
+emner = {} # Istedenfor eempty list bruker vi empty dictionary. 
+#kan skrive studieplan = {semester: [] for semester in range(1, 7)} men ønsker å ha listene klart. Egen prefferanse, men koden med "for-løkke" er bedre
+studieplan = {
+    "sem1": [],
+    "sem2": [],
+    "sem3": [],
+    "sem4": [],
+    "sem5": [],
+    "sem6": [],
+}    
 
+#Jeg bare koder denne delen enklere ved å bare bruke tall, så slipper vi f streng formateringen og hele pakken.
+#Ok, viser seg at jeg måtte bruke f streng formatering like vell, men det ble mer oversiktlig i valg2(). 
+#Printer ut semester listene inne i studieplan.
+studieplan = {semester: [] for semester in range(1, 7)}
 
-
-
-
-
-
-
-
-
-#husk å legge til exceptions for value error og type error.
-emne_liste = [] #ble tuklete å sette emne som argument på de andre bare for å få emne_liste inn i main loop.
-
-#Printer ut menyen. 
+#Printer ut menyen. #Midlertidig kommentert ut meny 9-14 for oversiktlighet. 
 def meny_liste():
     print("\n________Meny:_______")   
     print("01. Lag et nytt emne.")
@@ -42,57 +26,130 @@ def meny_liste():
     print("06. Lagre emnene og studieplanen til fil")
     print("07. Les inn emnene og studieplanen fra fil.")
     print("08. Avslutt.")
-    print("09. Frivillig: Slett et emne.")
-    print("10. Frivillig: Fjern et emne fra studieprogrammet uten å slette det fra emnelista.")
-    print("11. Frivillig: Legg til anbefalt valgemne.")
-    print("12. Frivillig: Fjern anbefalt valgemne.")
-    print("13. Frivillig: Legg til annet valgemne.")
-    print("14. Frivillig: Fjern annet valgemne.")
-#meny_liste()
+ 
+# valg1() v1.3. # Dette erstatter tidligere kode som het emne_liste
+def valg1(): 
 
-#endret på kode for å legge til på ny måte:
-def valg1(): #1) Lag et nytt emne.
-    
     emnekode = input("Skriv inn emnekode: ")
     navn = input("Skriv inn navn på emnet: ")
-    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: ")) #vi har 1 og 2 så vi slipper å tenke på lower case, space osv når folk skriver inn høst og vår. Kan eventuelt bruke h/v.
+    sesong_input = int(input("Skriv inn 1 for høst eller 2 for vår: ")) # kan lage try except blokk for å få prøve tall igjen hvis ikke int.
+    
+
     if sesong_input == 1: #grunnen til at det står sesong og ikke semester som i høst/vår semester er for å unngå overlapp i navn og forvirring siden i oppgave 2 trenger man å bruke "semester" i koden.
-        sesong = "høst"
+        sesong = "Høst"
     elif sesong_input == 2:
-        sesong = "vår"
+        sesong = "Vår"
     else:
         print("vennligst velg 1 (for høst) eller 2 (for vår)") # Lag en try except blokk senere..............    
+    
     studiepoeng = int(input("Skriv inn studie poeng: "))
 
-    emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng} 
-    emne_liste.append(emne)
-    print(f"Emne kode {emnekode} er lagt til.")
+    emner[emnekode] = {
+        "navn": navn,
+        "sesong": sesong,
+        "studiepoeng": studiepoeng
+    }
+    print(f"Emnekode: {emnekode} er lagt til.")    
+#--- OK, tror jeg forstår feilen nå. når vi endrer på valg()1 så gjør endringen error i valg3() pga.  f formatering av emnekode.
+#skal prøve å fikse det.
+#Fiksa :D
+
+
+
+#v1.5
+def valg2():  # Legg til et emne i studieplanen
+    valg3()  # Funksjonen skriver ut emnelistene som er tilgjengelige
+
+    emnekode = input("Skriv inn emnekoden du vil legge til i studieplanen: ").strip().lower()
+
+    # Sjekk om emnet allerede finnes i studieplanen (alle semestre)
+    for semester_emner in studieplan.values():
+        if emnekode in semester_emner:
+            print("Emnet er allerede i studieplanen.")
+            return  # Ikke legg til på nytt
+
+    print("Velg semesteret du ønsker å legge emnet i.")
+    while True:
+        try:
+            semester = int(input("Skriv et tall fra 1 til 6: "))
+            if 1 <= semester <= 6:
+                studieplan[semester].append(emnekode)
+                print(f"Emnekode {emnekode} ble lagt til i Semester {semester}.")
+                break
+            else:
+                print("Velg et tall mellom 1 og 6.")
+        except ValueError:
+            print("Skriv inn et gyldig tall.")
+
+                         
+                
+        
+                           
+    
+
+    #semester = int(input("Hvilket semester skal"))
+    #studieplan[semester]
+
+
+
 
 
 def valg3(): #Skriv ut liste over emner
-    print("Emne liste:")
-    for emne in emne_liste:
-        print(f"Emnekode: {emne["emnekode"]}, Navn: {emne["navn"]}, Sesong: {emne["sesong"]}, Studiepoeng: {emne["studiepoeng"]}")
-        # Vi vet at emne = {"emnekode": emnekode, "navn": navn, "sesong": sesong, "studiepoeng": studiepoeng}
-        # f formaterer så vi kan bruke variabler.
-        # {emne} henter variabler mens {emne['navn']} henter navn i emne.
-        # emne er en "ordbok" --> a dictionary. Basically liste.
-        # Begrunnelse for valg av dictionary istedenfor liste er fra anbefaling fra oppgaven. Det gjør det enklere å organisere,
-        #f.eks når man skal slette. Ulempen er at det kan ta lengre tid å kode, og man må slå opp "katalog" for å finne kode på emnet.
+    print("\nEmner:") # Denne ligger før "for løkken" siden vi bare ønsker å printe ut overskriften en gang.
+    for kode, data in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
+        print(f"Emnekode: {kode}, Navn: {data['navn']}, Sesong: {data['sesong']}, Studiepoeng: {data['studiepoeng']} ") 
+        #kode er emnekode, data er verdier i emner. #tilsvarende kode på generisk form blir vell nøkkel og verdi som dictionaries har. 
+
+'''
+def valg4(): #Vis studieplan #husk å teste denne, blir ikke ferdig idag, det er sent på natta... v1.5.1
+    print("\nStudieplan:")
+    for semester, emnekoder in studieplan.items(): #alternativt, se *** nede:
+        print(f"Semester {semester}") #
+
+    for kode in emnekoder:
+        emne = emner.get(kode) 
+        if emne:
+            print(f"Emnekode: {kode}, Navn: {emne['navn']}, Sesong: {emne['sesong']}, Studiepoeng: {emne['studiepoeng']}")   
+        '''
+        
+#  *** alternativt kan vi skrive slikt hvis vi ikke ønsker .items()   : 
+'''
+def valg4():  # Vis hele studieplanen
+    print("\nStudieplan:")
+    for semester in studieplan:  # iterates over keys
+        emnekoder = studieplan[semester]  # gets value from key
+        print(f"\n{semester}:")
+        for emnekode in emnekoder:
+            print(f"{emnekode}")
+'''
+#Skal kommentere mer på denne etterpå...
+def valg4():  # Vis hele studieplanen v1.7
+    print("\nStudieplan:")
+    for semester, emnekoder in studieplan.items():
+        print(f"\nSemester {semester}:")
+        if not emnekoder:
+            print("  (Ingen emner)")  # If the semester list is empty
+        else:
+            for kode in emnekoder:
+                emne = emner.get(kode)
+                if emne:
+                    print(f"  {kode}: {emne['navn']} ({emne['sesong']}, {emne['studiepoeng']} studiepoeng)")
+                else:
+                    print(f"  {kode}: (Ukjent emne)")
+   #--------------------------------------------------------------------------------------------------------------
+#koden fungerer endelig, men må sette inn sperre for duplikat. Må også sette inn try except, elif, else, osv... 
+ #--------------------------------------------------------------------------------------------------------------------
 
 
 
 
- 
-
-#EDIT main loop her etterpå, dette er hvertfall starten.
-def hoved_program():
+def hoved_program(): #EDIT main loop her etterpå, dette er hvertfall starten.
     
     while True:
         meny_liste() #skriver ut meny valgene 
         
         valg = int(input("\nVelg et tall fra menyen: ")) #sikkrer at input tallet blir heltall så hele programmet ikke bare krasjer...  
-        
+        #midlertidig kommentert ut valg 9-14.
         if valg == 1:
             valg1()
         elif valg == 2: 
@@ -110,22 +167,10 @@ def hoved_program():
         elif valg == 8:
             print("Avslutter programmet")
             break
-        elif valg == 9:
-            valg9()
-        elif valg == 10:
-            valg10()
-        elif valg == 11:
-            valg11()
-        elif valg == 12:
-            valg12()
-        elif valg == 13:
-            valg13()
-        elif valg == 14: 
-            #valg14()
-            print("test14, i def_meny_valg for debug") #for debug, husk å rette opp koden før levering.
         else:
-            print("Feil, velg et tall mellom 1 og 14.")
-           
-                      
+            print("Feil, velg et tall mellom 1 og 8.") #husk å endre fra 8 til 14 når det implimenteres. 
+            #Slettet de andre, siden koden crashet da jeg kommenterte ut de andre.
+
+
 #Kjører hoved programmet for menyen
 hoved_program()
