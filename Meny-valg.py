@@ -112,6 +112,115 @@ def valg2():  # Legg til et emne i studieplanen
         for semester, poeng in ugyldige_semestere:
             print(f"Semester {semester} har {poeng} studiepoeng.")
 
+def valg3(): #Skriv ut liste over emner
+    print("\nEmner:") # Denne ligger før "for løkken" siden vi bare ønsker å printe ut overskriften en gang.
+    for kode, data in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
+        print(f"Emnekode: {kode}, Navn: {data['navn']}, Sesong: {data['sesong']}, Studiepoeng: {data['studiepoeng']} ") 
+        #kode er emnekode, data er verdier i emner. #tilsvarende kode på generisk form blir vell nøkkel og verdi som dictionaries har. 
+
+
+#Skal kommentere mer på denne etterpå...
+def valg4():  # Vis hele studieplanen v1.7
+    print("\nStudieplan:")
+    for semester, emnekoder in studieplan.items():
+        print(f"\nSemester {semester}:")
+        if not emnekoder:
+            print("  (Ingen emner)")  # If the semester list is empty
+        else:
+            for kode in emnekoder:
+                emne = emner.get(kode)
+                if emne:
+                    print(f"  {kode}: {emne['navn']} ({emne['sesong']}, {emne['studiepoeng']} studiepoeng)")
+                else:
+                    print(f"  {kode}: (Ukjent emne)")
+
+def valg5():  #Sjekk om studieplanen er gyldig
+    print("\nSjekker om studieplanen er gyldig...")
+    ugyldige_semestere = []
+
+    for semester, emnekoder in studieplan.items():
+        total_studiepoeng = 0
+        for kode in emnekoder:
+            emne = emner.get(kode)
+            if emne:
+                total_studiepoeng += emne["studiepoeng"]
+        
+        if total_studiepoeng != 30:
+            ugyldige_semestere.append((semester, total_studiepoeng))
+
+    if not ugyldige_semestere:
+        print("Studieplanen er gyldig. Hvert semester har 30 studiepoeng.")
+    else:
+        print("Studieplanen er ikke gyldig.")
+        for semester, poeng in ugyldige_semestere:
+            print(f"Semester {semester} har {poeng} studiepoeng.")
+
+
+import csv
+
+def valg6():
+    """Lagrer emner og studieplan til CSV-filer."""
+    try:
+        emne_filnavn = input("Filnavn for emner (uten .csv): ").strip() or "emner"
+        plan_filnavn = input("Filnavn for studieplan (uten .csv): ").strip() or "studieplan"
+
+        # Lagre emner
+        with open(emne_filnavn + ".csv", "w", newline="", encoding="utf-8") as fil:
+            felt_navn = ["emnekode", "navn", "sesong", "studiepoeng"]
+            writer = csv.DictWriter(fil, fieldnames=felt_navn)
+            writer.writeheader()
+            writer.writerows({"emnekode": kode, **data} for kode, data in emner.items())
+        print(f"Emneliste lagret til '{emne_filnavn}.csv'.")
+
+        # Lagre studieplan
+        with open(plan_filnavn + ".csv", "w", newline="", encoding="utf-8") as fil:
+            writer = csv.writer(fil)
+            writer.writerow(["semester", "emner"])
+            for semester, emneliste in studieplan.items():
+                writer.writerow([semester, ";".join(emneliste)])
+        print(f"Studieplan lagret til '{plan_filnavn}.csv'.")
+
+    except Exception as e:
+        print(f"Feil ved lagring: {e}")
+
+
+def valg7():
+    """Leser inn emner og studieplan fra CSV-filer."""
+    global emner, studieplan
+    try:
+        emne_filnavn = input("Filnavn for emner (uten .csv): ").strip() or "emner"
+        plan_filnavn = input("Filnavn for studieplan (uten .csv): ").strip() or "studieplan"
+
+        emner = {}
+        studieplan = {}
+
+        # Les emner
+        with open(emne_filnavn + ".csv", "r", encoding="utf-8") as fil:
+            reader = csv.DictReader(fil)
+            for rad in reader:
+                emnekode = rad["emnekode"]
+                emner[emnekode] = {
+                    "navn": rad["navn"],
+                    "sesong": rad["sesong"],
+                    "studiepoeng": float(rad["studiepoeng"])
+                }
+        print(f"Leste inn {len(emner)} emner fra '{emne_filnavn}.csv'.")
+
+        # Les studieplan
+        with open(plan_filnavn + ".csv", "r", encoding="utf-8") as fil:
+            reader = csv.reader(fil)
+            next(reader)
+            for semester, emner_str in reader:
+                emneliste = emner_str.split(";") if emner_str else []
+                studieplan[int(semester)] = emneliste
+        print(f"Studieplan lest inn fra '{plan_filnavn}.csv'.")
+
+    except FileNotFoundError:
+        print("Fant ikke filen. Sjekk filnavn og prøv igjen.")
+    except Exception as e:
+        print(f"En uventet feil oppstod: {e}")
+
+
 
 
 def hoved_program(): #EDIT main loop her etterpå, dette er hvertfall starten.
