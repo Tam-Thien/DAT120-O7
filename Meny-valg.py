@@ -52,7 +52,7 @@ def valg1():
 def valg2(): #Legg til et emne i studieplanen #Husk å legge til try except senere etter v1.4. 
     #print("\nVelg emne:") # husk å legge til kode for å sjekke... basically bare aktiver valg3() funksjon og print ut emner. Og i neste kode, bruk valget til å sette inn i lista.
     valg3() # funksjonen skriver ut emne lister som er tilgjengelige.
-    emnekode = input("Skriv inn emnekoden du vil legge til i studieplanet.") # kan prøve å filtrere / gjøre ryddigere ved f.eks .strip(), .lower()  eller lignende. Skal bare kode den funksjonelle delen før jeg setter meg for mye inn i feilhåndtering og exept blokk osv...
+    emnekode = input("Skriv inn emnekoden du vil legge til i studieplanet: ") # kan prøve å filtrere / gjøre ryddigere ved f.eks .strip(), .lower()  eller lignende. Skal bare kode den funksjonelle delen før jeg setter meg for mye inn i feilhåndtering og exept blokk osv...
     
 
     if emnekode not in emner:
@@ -68,13 +68,13 @@ def valg2(): #Legg til et emne i studieplanen #Husk å legge til try except sene
     semester = int(input("Skriv et tall fra 1 til 6: "))# legg til try except senere, dette var v1.5
     # husk value error, elif, else osv.....
     studieplan[semester].append(emnekode)
-    print(f"Emnekode: {emnekode} ble lagt til i Semester {semester}")
+    print(f"Emnekode: {emnekode} ble lagt til Semester {semester}")
 
 
 def valg3(): #Skriv ut liste over emner
     print("\nEmner:") # Denne ligger før "for løkken" siden vi bare ønsker å printe ut overskriften en gang.
-    for kode, data in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
-        print(f"Emnekode: {kode}, Navn: {data['navn']}, Sesong: {data['sesong']}, Studiepoeng: {data['studiepoeng']} ") 
+    for nøkkel, verdi in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
+        print(f"Emnekode: {nøkkel}, Navn: {verdi['navn']}, Sesong: {verdi['sesong']}, Studiepoeng: {verdi['studiepoeng']} ") 
         #kode er emnekode, data er verdier i emner. #tilsvarende kode på generisk form blir vell nøkkel og verdi som dictionaries har. 
 
 
@@ -84,17 +84,16 @@ def valg4():
     for semester, emnekoder in studieplan.items():
         print(f"\nSemester {semester}:")
         if not emnekoder:
-            print("  (Ingen emner)")  # If the semester list is empty
+            print("(Ingen emner)")  # If the semester list is empty
         else:
             for kode in emnekoder:
                 emne = emner.get(kode)
                 if emne:
-                    print(f"  {kode}: {emne['navn']} ({emne['sesong']}, {emne['studiepoeng']} studiepoeng)")
+                    print(f"Emnekode: {kode}, Navn: {emne['navn']}, Sesong: {emne['sesong']}, Studiepoeng {emne['studiepoeng']}")
                 else:
-                    print(f"  {kode}: (Ukjent emne)")
+                    print(f"{kode}: (Ukjent emne)")
 
 def valg5():  #Sjekk om studieplanen er gyldig
-    print("\nSjekker om studieplanen er gyldig...")
     ugyldige_semestere = []
 
     for semester, emnekoder in studieplan.items():
