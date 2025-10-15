@@ -1,14 +1,14 @@
 
 emner = {} # Istedenfor eempty list bruker vi empty dictionary. 
 #kan skrive studieplan = {semester: [] for semester in range(1, 7)} men ønsker å ha listene klart. Egen prefferanse, men koden med "for-løkke" er bedre
-studieplan = {
+"""studieplan = {
     "sem1": [],
     "sem2": [],
     "sem3": [],
     "sem4": [],
     "sem5": [],
     "sem6": [],
-}    
+}    """""
 
 #Jeg bare koder denne delen enklere ved å bare bruke tall, så slipper vi f streng formateringen og hele pakken.
 #Ok, viser seg at jeg måtte bruke f streng formatering like vell, men det ble mer oversiktlig i valg2(). 
