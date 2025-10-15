@@ -105,69 +105,12 @@ def valg2():  # Legg til et emne i studieplanen
         except ValueError:
             print("Skriv inn et gyldig tall.")
 
-
-
-
-           
-    
-                
-      
-                           
-    
-
-    #semester = int(input("Hvilket semester skal"))
-    #studieplan[semester]
-
-
-
-
-
-def valg3(): #Skriv ut liste over emner
-    print("\nEmner:") # Denne ligger før "for løkken" siden vi bare ønsker å printe ut overskriften en gang.
-    for kode, data in emner.items(): # siden dictionary går par-vis som nøkkel og verdi. 
-        print(f"Emnekode: {kode}, Navn: {data['navn']}, Sesong: {data['sesong']}, Studiepoeng: {data['studiepoeng']} ") 
-        #kode er emnekode, data er verdier i emner. #tilsvarende kode på generisk form blir vell nøkkel og verdi som dictionaries har. 
-
-'''
-def valg4(): #Vis studieplan #husk å teste denne, blir ikke ferdig idag, det er sent på natta... v1.5.1
-    print("\nStudieplan:")
-    for semester, emnekoder in studieplan.items(): #alternativt, se *** nede:
-        print(f"Semester {semester}") #
-
-    for kode in emnekoder:
-        emne = emner.get(kode) 
-        if emne:
-            print(f"Emnekode: {kode}, Navn: {emne['navn']}, Sesong: {emne['sesong']}, Studiepoeng: {emne['studiepoeng']}")   
-        '''
-        
-#  *** alternativt kan vi skrive slikt hvis vi ikke ønsker .items()   : 
-'''
-def valg4():  # Vis hele studieplanen
-    print("\nStudieplan:")
-    for semester in studieplan:  # iterates over keys
-        emnekoder = studieplan[semester]  # gets value from key
-        print(f"\n{semester}:")
-        for emnekode in emnekoder:
-            print(f"{emnekode}")
-'''
-#Skal kommentere mer på denne etterpå...
-def valg4():  # Vis hele studieplanen v1.7
-    print("\nStudieplan:")
-    for semester, emnekoder in studieplan.items():
-        print(f"\nSemester {semester}:")
-        if not emnekoder:
-            print("  (Ingen emner)")  # If the semester list is empty
-        else:
-            for kode in emnekoder:
-                emne = emner.get(kode)
-                if emne:
-                    print(f"  {kode}: {emne['navn']} ({emne['sesong']}, {emne['studiepoeng']} studiepoeng)")
-                else:
-                    print(f"  {kode}: (Ukjent emne)")
-   #--------------------------------------------------------------------------------------------------------------
-#koden fungerer endelig, men må sette inn sperre for duplikat. Må også sette inn try except, elif, else, osv... 
- #--------------------------------------------------------------------------------------------------------------------
-
+    if not ugyldige_semestere:
+        print("Studieplanen er gyldig. Hvert semester har 30 studiepoeng.")
+    else:
+        print("Studieplanen er ikke gyldig.")
+        for semester, poeng in ugyldige_semestere:
+            print(f"Semester {semester} har {poeng} studiepoeng.")
 
 
 
